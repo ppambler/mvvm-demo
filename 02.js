@@ -1,40 +1,43 @@
-function Subject(name) {
-  this.name = name
-  this.observers = []
-}
-Subject.prototype.addObserver = function (observer) {
-  this.observers.push(observer)
-}
-Subject.prototype.removeObserver = function (observer) {
-  var index = this.observers.indexOf(observer)
-  if (index > -1) {
-    this.observers.splice(index, 1)
+class Subject {
+  constructor() {
+    this.observers = []
   }
-}
-Subject.prototype.notify = function () {
-  this.observers.forEach(function (observer) {
-    observer.update()
-  })
-}
-
-function Observer(name) {
-  this.name = name
-  this.update = function () {
-    console.log(name + ' update...')
+  addObserver(observer) {
+    this.observers.push(observer)
+  }
+  removeObserver(observer) {
+    var index = this.observers.indexOf(observer)
+    if (index > -1) {
+      this.observers.splice(index, 1)
+    }
+  }
+  notify() {
+    this.observers.forEach(observer => {
+      observer.update()
+    })
   }
 }
 
-// 创建主题
-var subject = new Subject('生活美食')
 
-//创建观察者1
-var observer1 = new Observer('hunger')
-//主题添加观察者1
+class Observer {
+  constructor() {
+    this.update = function () {}
+  }
+}
+
+
+let subject = new Subject()
+let observer1 = new Observer()
+//覆盖
+observer1.update = function () {
+  console.log('observer1 update')
+}
 subject.addObserver(observer1)
-//创建观察者2
-var observer2 = new Observer('valley')
-//主题添加观察者2
+
+let observer2 = new Observer('valley')
+observer2.update = function () {
+  console.log('observer2 update')
+}
 subject.addObserver(observer2)
 
-//主题通知所有的观察者更新
 subject.notify()
