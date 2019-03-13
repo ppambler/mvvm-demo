@@ -1,6 +1,7 @@
 class Subject {
-  constructor() {
+  constructor(name) {
     this.observers = []
+    this.name = name
   }
   addObserver(observer) {
     this.observers.push(observer)
@@ -12,32 +13,32 @@ class Subject {
     }
   }
   notify() {
+    let _this = this
     this.observers.forEach(observer => {
-      observer.update()
+      observer.update(_this.name)
     })
   }
 }
 
 
 class Observer {
-  constructor() {
+  constructor(name) {
     this.update = function () {}
+    this.name = name
+  }
+  subscribeTo(subject) {
+    subject.addObserver(this)
   }
 }
 
 
-let subject = new Subject()
-let observer1 = new Observer()
-//覆盖
-observer1.update = function () {
-  console.log('observer1 update')
+let subject = new Subject('生活美食')
+let subject2 = new Subject('音乐')
+let observer = new Observer('Ambler')
+observer.update = function (topic) {
+  console.log(`${this.name} update ${topic}`)
 }
-subject.addObserver(observer1)
-
-let observer2 = new Observer('valley')
-observer2.update = function () {
-  console.log('observer2 update')
-}
-subject.addObserver(observer2)
-
+observer.subscribeTo(subject) //观察者订阅主题
+observer.subscribeTo(subject2)
 subject.notify()
+subject2.notify()
