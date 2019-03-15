@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.bootcss.com/vue/2.6.8/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{name}}
+  </div>
+  <input type="text" id="input">
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'frank'
+      }
+    })
+    var input = document.getElementById('input')
+    console.log(input.nodeType) //1
+    console.log(input.childNodes)
+    traverse(input)
+
+    function traverse(node) {
+      console.log('我执行了吗？')
+      if (node.nodeType === 1) {
+        console.log('在吗？')
+        node.childNodes.forEach(childNode => {
+          console.log(childNode)
+          this.traverse(childNode)
+        })
+        if (node.childNodes.length === 0) {
+          console.log('遍历到底了')
+        }
+      } else if (node.nodeType === 3) { //文本
+        console.log('没有子元素了')
+      }
+    }
+  </script>
+</body>
+
+</html>
