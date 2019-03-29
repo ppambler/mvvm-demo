@@ -12,13 +12,17 @@
 <body>
   <div id="app">
     {{name}}
+    <span>{{xxx.age}}</span>
   </div>
   <input type="text" id="input">
   <script>
     var vm = new Vue({
       el: '#app',
       data: {
-        name: 'frank'
+        name: 'frank',
+        xxx: {
+          age: 15
+        }
       }
     })
     var input = document.getElementById('input')
